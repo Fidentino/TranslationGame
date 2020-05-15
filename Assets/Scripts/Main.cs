@@ -49,7 +49,7 @@ public class Main : MonoBehaviour
             for (int i = -5; i <= 5; i++)
                 for (int j = -5; j <= 5; j++)
                     if ((i * i + j * j < 25) && grid.GetTile(new Vector3Int(x + i, y + j, 0)) == white)
-                        fill(black, x + i, y + j, x + i, y + j);
+                        grid.SetTile(new Vector3Int(x + i, y + j, 0), black);
         }
         else if (Input.GetMouseButton(1))
         {
@@ -62,7 +62,18 @@ public class Main : MonoBehaviour
                     for (int j = left; j <= right; j++)
                         for (int k = -cellsize / 2; k <= cellsize / 2; k++)
                             grid.SetTile(new Vector3Int(j, k, 0), white);
-                    UnityEngine.Debug.Log(i);
+                }
+            }
+        }
+        for (int i = 0; i < N; i++)
+        {
+            int left = -width / 2 + (20 + cellsize) * i;
+            bool[,] matrix = new bool[cellsize + 1, cellsize + 1];
+            for (int j = 0; j < cellsize + 1; j++)
+            {
+                for (int k = 0; k < cellsize + 1; k++)
+                {
+                    matrix[j, k] = (grid.GetTile(new Vector3Int(left + k, -cellsize / 2 + j, 0)) == black);
                 }
             }
         }
